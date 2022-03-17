@@ -25,5 +25,11 @@ def prof_training(prof):
                            image=url_for('static', filename='img/' + image))
 
 
+@app.route('/list_prof/<type_of_list>')
+def list_prof(type_of_list):
+    return render_template('list.html',
+                           type_of_list=type_of_list)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)
