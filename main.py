@@ -1,6 +1,8 @@
+import json
 from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 @app.route('/')
@@ -29,6 +31,15 @@ def prof_training(prof):
 def list_prof(type_of_list):
     return render_template('list.html',
                            type_of_list=type_of_list)
+
+
+@app.route('/answer')
+@app.route('/auto_answer')
+def answer():
+    with open('templates/dict_answer.json', "rt", encoding="utf8") as f:
+        info = json.load(f)
+    return render_template('auto_answer.html',
+                           info=info)
 
 
 if __name__ == '__main__':
