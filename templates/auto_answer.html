@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Результат отбора</title>
+{% endblock %}
+
+{% block content %}
+    <h4>Результат отбора</h4>
+    <p>Имя: {{ info["name"] }}</p>
+    <p>Фамилия: {{ info["surname"] }}</p>
+    <p>Образование: {{ info["education"] }}</p>
+    <p>Профессия: {{ info["profession"] }}</p>
+    <p>Пол: {{ info["sex"] }}</p>
+    <p>Мотивация: {{ info["motivation"] }}</p>
+    <p>Готовы остаться на марсе: {{ info["ready"] }}</p>
+{% endblock %}
