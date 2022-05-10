@@ -59,5 +59,13 @@ def distribution():
     return render_template('distribution.html', astronauts=astronauts)
 
 
+@app.route('/table_param/<gender>/<int:age>')
+def table_param(gender: str, age: int):
+    return render_template('table_param.html',
+                           age=age,
+                           gender=1 if gender == "male" else 0,
+                           image=url_for('static', filename=f'img/alien_{1 if age > 21 else 2}.jpg'))
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)
