@@ -1,11 +1,15 @@
 import json
+import os
 
 from flask import Flask, render_template, url_for, redirect
+from werkzeug.utils import secure_filename
 
 from loginform import LoginForm
+from imageform import ImageForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['IMAGES'] = 1
 
 
 @app.route('/')
@@ -65,6 +69,22 @@ def table_param(gender: str, age: int):
                            age=age,
                            gender=1 if gender == "male" else 0,
                            image=url_for('static', filename=f'img/alien_{1 if age > 21 else 2}.jpg'))
+
+
+@app.route('/carousel', methods=['POST', 'GET'])
+def carousel():
+    form = ImageForm()
+    if form.validate_on_submit():
+        i = form.image.data
+        filename = secure_filename(i.filename)
+        with open('static/img/carousel/' + filename, 'wb') as f:
+            f.write(i.read())
+        app.config['IMAGES'] += 1
+        return redirect('carousel')
+    images = os.listdir('static/img/carousel/')
+    return render_template('carousel.html',
+                           images=[url_for('static', filename='img/carousel/' + image) for image in images],
+                           form=form)
 
 
 if __name__ == '__main__':
