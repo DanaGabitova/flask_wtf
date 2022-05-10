@@ -1,5 +1,6 @@
 import json
 import os
+from random import choice
 
 from flask import Flask, render_template, url_for, redirect
 from werkzeug.utils import secure_filename
@@ -85,6 +86,14 @@ def carousel():
     return render_template('carousel.html',
                            images=[url_for('static', filename='img/carousel/' + image) for image in images],
                            form=form)
+
+
+@app.route('/member')
+def member():
+    with open('templates/members.json', "r", encoding="utf-8") as f:
+        members = json.load(f)
+    person = choice(members)
+    return render_template('member.html', user=person)
 
 
 if __name__ == '__main__':
